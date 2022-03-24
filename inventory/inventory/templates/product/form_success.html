@@ -1,0 +1,85 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<div class="container">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Request done successfully!</strong> You should check in on some of those fields below.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table_responsive">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Detail</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Option</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if product %}
+                {% for items in product %}
+                    <tr>
+                        <th scope="row">{{items.id}}</th>
+                        <td><a href="{% url 'Product:item_review' pk=items.id%}">{{items.name}}</a></td>
+                        <td>{{ items.detail }}</td>
+                        <td>{{ items.price }}</td>
+                        <td>{{ items.quantity }}</td>
+                        <td>
+                          <a href="{% url 'Product:item_update' pk=items.id %}" class="btn btn-secondary">Edit</a>
+                          
+
+                          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Delete
+                          </button>
+
+
+                          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">You want  to delete?</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  {{items.name}}
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                  <a href="{% url 'Product:delete' pk=items.id %}" class="btn btn-danger">Yes, Delete</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+              {% else %}
+              <tr>
+                <div class="alert alert-danger" role="alert">
+                  No product on the inventory.
+                </div>
+              </tr>
+              {% endif %}
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <a href="{% url 'home' %}" class="btn btn-primary text-dark">Home</a> 
+      <a href="{% url 'Product:item_add' %}" class="btn btn-success text-dark">Add product</a>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+

@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<div class="table_responsive">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Detail</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if product %}
+                <tr>
+                    <th scope="row">{{product.id}}</th>
+                    <td>{{product.name}}</td>
+                    <td>{{ product.detail }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>{{ product.quantity }}</td>
+                </tr>
+          {% endif %}
+        </tbody>
+      </table>
+</div>
+<a href="{% url 'Product:inventory_list' %}" class="btn btn-secondary">Back to inventory list</a>
+
+
+{% endblock %}
